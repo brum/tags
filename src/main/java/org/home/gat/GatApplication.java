@@ -1,4 +1,4 @@
-package com.example;
+package org.home.gat;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
