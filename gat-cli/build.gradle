@@ -1,0 +1,11 @@
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'gat'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('io.airlift:airline:0.7')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}

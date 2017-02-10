@@ -1,0 +1,2 @@
+include 'gat-core'
+include 'gat-cli'
