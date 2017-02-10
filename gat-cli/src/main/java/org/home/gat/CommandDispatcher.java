@@ -1,7 +1,8 @@
 package org.home.gat;
 
 import io.airlift.airline.Cli;
-import io.airlift.airline.Help;
+import org.home.gat.command.GatCommand;
+import org.home.gat.command.HelpCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -22,13 +23,13 @@ public class CommandDispatcher implements CommandLineRunner, ApplicationContextA
 
     @Override
     public void run(String... args) throws Exception {
-        Cli.CliBuilder<Runnable> builder = Cli.<Runnable>builder("gat")
+        Cli.CliBuilder<GatCommand> builder = Cli.<GatCommand>builder("gat")
                 .withDescription("The program for tagging files")
-                .withDefaultCommand(Help.class)
-                .withCommand(Help.class);
+                .withDefaultCommand(HelpCommand.class)
+                .withCommand(HelpCommand.class);
 
-        Cli<Runnable> gatDispatcher = builder.build();
+        Cli<GatCommand> gatDispatcher = builder.build();
 
-        gatDispatcher.parse(args).run();
+        gatDispatcher.parse(args).run(applicationContext);
     }
 }
