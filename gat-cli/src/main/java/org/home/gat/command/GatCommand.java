@@ -1,9 +1,22 @@
 package org.home.gat.command;
 
+import io.airlift.airline.Arguments;
+import io.airlift.airline.model.GlobalMetadata;
 import org.springframework.context.ApplicationContext;
 
-public interface GatCommand {
+import javax.inject.Inject;
+import java.util.List;
 
-    void run(ApplicationContext applicationContext);
+import static com.google.common.collect.Lists.newArrayList;
+
+public abstract class GatCommand {
+
+    @Inject
+    GlobalMetadata global;
+
+    @Arguments
+    List<String> command = newArrayList();
+
+    public abstract void run(ApplicationContext applicationContext);
 
 }
