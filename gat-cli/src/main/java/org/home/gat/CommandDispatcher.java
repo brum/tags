@@ -3,6 +3,7 @@ package org.home.gat;
 import io.airlift.airline.Cli;
 import org.home.gat.command.GatCommand;
 import org.home.gat.command.HelpCommand;
+import org.home.gat.command.TagListCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -27,6 +28,11 @@ public class CommandDispatcher implements CommandLineRunner, ApplicationContextA
                 .withDescription("The program for tagging files")
                 .withDefaultCommand(HelpCommand.class)
                 .withCommand(HelpCommand.class);
+
+        builder.withGroup("tags")
+                .withDescription("Manage tags")
+                .withDefaultCommand(TagListCommand.class)
+                .withCommand(TagListCommand.class);
 
         Cli<GatCommand> gatDispatcher = builder.build();
 

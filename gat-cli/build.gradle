@@ -5,6 +5,8 @@ jar {
 }
 
 dependencies {
+    compile project(":gat-core")
+
     compile('org.springframework.boot:spring-boot-starter')
     compile('io.airlift:airline:0.7')
     testCompile('org.springframework.boot:spring-boot-starter-test')
