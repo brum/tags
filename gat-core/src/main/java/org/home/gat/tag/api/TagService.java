@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface TagService {
 
-    List<String> list();
+    List<Tag> list(String tagName);
 
 }

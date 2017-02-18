@@ -11,12 +11,6 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public abstract class GatCommand {
 
-    @Inject
-    GlobalMetadata global;
-
-    @Arguments
-    List<String> command = newArrayList();
-
     public abstract void run(ApplicationContext applicationContext);
 
 }
