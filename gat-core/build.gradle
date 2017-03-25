@@ -10,6 +10,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile('org.flywaydb:flyway-core')
+    compile('javax.inject:javax.inject:1')
 
     runtime('com.h2database:h2')
 

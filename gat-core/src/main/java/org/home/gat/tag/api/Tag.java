@@ -6,16 +6,18 @@ import java.util.List;
 
 public class Tag {
 
+    private final Long id;
     private final String name;
     private final boolean hasChildren;
 
-    public Tag(String name) {
-        this(name, false);
+    public Tag(Long id, String name) {
+        this(id, name, false);
     }
 
-    public Tag(String name, boolean hasChildren) {
+    private Tag(Long id, String name, boolean hasChildren) {
         Preconditions.checkNotNull(name);
 
+        this.id = id;
         this.name = name;
         this.hasChildren = hasChildren;
     }
@@ -26,5 +28,9 @@ public class Tag {
 
     public boolean isHasChildren() {
         return hasChildren;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

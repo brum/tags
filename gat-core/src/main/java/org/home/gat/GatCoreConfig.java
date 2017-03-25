@@ -1,7 +1,7 @@
 package org.home.gat;
 
 import org.home.gat.tag.api.TagService;
-import org.home.gat.tag.impl.InMemoryTagStore;
+import org.home.gat.tag.impl.TagStoreImpl;
 import org.home.gat.tag.impl.TagServiceImpl;
 import org.home.gat.tag.impl.TagStore;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ public class GatCoreConfig {
 
     @Bean
     TagStore tagStore() {
-        return new InMemoryTagStore();
+        return new TagStoreImpl();
     }
 
     @Bean

@@ -6,4 +6,6 @@ public interface TagService {
 
     List<Tag> list(String tagName);
 
+    void add(String tagName, String parentTagName);
+
 }
