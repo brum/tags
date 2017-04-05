@@ -1,8 +1,10 @@
 package org.home.gat.tag.impl;
 
 import org.home.gat.tag.api.Tag;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.SingleColumnRowMapper;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -15,20 +17,27 @@ public class TagStoreImpl implements TagStore {
 
     @Override
     public List<Tag> list(String tagName) {
-        return jdbcTemplate.query("SELECT * FROM TAG", (rs, rowNum) ->
-                new Tag(rs.getLong("id"), rs.getString("name")));
+        StringBuilder queryBuilder = new StringBuilder(
+                "select t.name, count(child.id) > 0 as has_children from tag t" +
+                        " left join tag child on child.parent_id = t.id");
+
+        if (tagName == null) {
+            queryBuilder.append(" where t.parent_id is null");
+        } else {
+            queryBuilder.append(" join tag parent on t.parent_id = parent.id and parent.name = '").append(tagName).append("'");
+        }
+        queryBuilder.append(" group by t.id, t.name order by t.name");
+
+        return jdbcTemplate.query(queryBuilder.toString(), new BeanPropertyRowMapper<>(Tag.class));
     }
 
     @Override
-    public Optional<Tag> getOne(String tagName) {
-        ResultSetExtractor<Tag> resultSetExtractor =
-                rs -> rs.next() ?
-                        new Tag(rs.getLong("id"), rs.getString("name")) :
-                        null;
-        Tag tag = jdbcTemplate.query("SELECT * FROM TAG WHERE NAME=?",
-                resultSetExtractor,
+    public Optional<Long> getId(String tagName) {
+        List<Long> results = jdbcTemplate.query(
+                "SELECT ID FROM TAG WHERE NAME=?",
+                new SingleColumnRowMapper<>(Long.class),
                 tagName);
-        return Optional.ofNullable(tag);
+        return Optional.ofNullable(DataAccessUtils.singleResult(results));
     }
 
     @Override

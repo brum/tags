@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @JdbcTest
@@ -40,6 +41,13 @@ public class TagServiceTest {
     @Test
     public void addTest() {
         tagService.add("tag1", null);
-        Assert.assertFalse(tagService.list(null).isEmpty());
+        List<Tag> tags = tagService.list(null);
+        Assert.assertTrue(tags.size() == 1);
+        Assert.assertFalse(tags.get(0).isHasChildren());
+
+        tagService.add("tag2", "tag1");
+        tags = tagService.list(null);
+        Assert.assertTrue(tags.size() == 1);
+        Assert.assertTrue(tags.get(0).isHasChildren());
     }
 }

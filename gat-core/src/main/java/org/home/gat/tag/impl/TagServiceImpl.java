@@ -23,28 +23,18 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void add(String tagName, String parentTagName) {
-        checkTagNotExist(tagName);
+        if (tagStore.getId(tagName).isPresent()) {
+            throw new TagAlreadyExistsException(tagName);
+        }
         if (parentTagName == null) {
             tagStore.add(tagName);
         } else {
-            Optional<Tag> parentTagOpt = tagStore.getOne(parentTagName);
-            if (!parentTagOpt.isPresent()) {
+            Optional<Long> parentTagIdOpt = tagStore.getId(parentTagName);
+            if (!parentTagIdOpt.isPresent()) {
                 throw new TagNotFoundException(parentTagName);
             }
-            tagStore.add(tagName, parentTagOpt.get().getId());
-        }
-
-    }
-
-    private void checkTagExist(String tagName) {
-        if (!tagStore.getOne(tagName).isPresent()) {
-            throw new TagNotFoundException(tagName);
+            tagStore.add(tagName, parentTagIdOpt.get());
         }
     }
 
-    private void checkTagNotExist(String tagName) {
-        if (tagStore.getOne(tagName).isPresent()) {
-            throw new TagAlreadyExistsException(tagName);
-        }
-    }
 }

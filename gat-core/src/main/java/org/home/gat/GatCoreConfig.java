@@ -6,8 +6,10 @@ import org.home.gat.tag.impl.TagServiceImpl;
 import org.home.gat.tag.impl.TagStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
+@Import(H2ServerConfiguration.class)
 public class GatCoreConfig {
 
     @Bean

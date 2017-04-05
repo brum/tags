@@ -9,7 +9,7 @@ public interface TagStore {
 
     List<Tag> list(String tagName);
 
-    Optional<Tag> getOne(String tagName);
+    Optional<Long> getId(String tagName);
 
     void add(String tagName);
 
