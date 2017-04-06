@@ -6,7 +6,6 @@ import org.home.gat.exception.TagNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -43,11 +42,19 @@ public class TagServiceTest {
         tagService.add("tag1", null);
         List<Tag> tags = tagService.list(null);
         Assert.assertTrue(tags.size() == 1);
-        Assert.assertFalse(tags.get(0).isHasChildren());
+        Tag tag = tags.get(0);
+        Assert.assertEquals("tag1", tag.getName());
+        Assert.assertFalse(tag.isHasChildren());
 
         tagService.add("tag2", "tag1");
         tags = tagService.list(null);
         Assert.assertTrue(tags.size() == 1);
         Assert.assertTrue(tags.get(0).isHasChildren());
+
+        tags = tagService.list("tag1");
+        Assert.assertTrue(tags.size() == 1);
+        tag = tags.get(0);
+        Assert.assertEquals("tag2", tag.getName());
+        Assert.assertFalse(tags.get(0).isHasChildren());
     }
 }
