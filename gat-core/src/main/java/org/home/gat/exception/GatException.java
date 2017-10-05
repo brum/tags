@@ -2,7 +2,7 @@ package org.home.gat.exception;
 
 public class GatException extends RuntimeException {
 
-    public GatException(String string, Object... args) {
+    GatException(String string, Object... args) {
         super(String.format(string, args));
     }
 

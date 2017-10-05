@@ -2,10 +2,7 @@ package org.home.gat;
 
 import com.google.common.base.Splitter;
 import io.airlift.airline.Cli;
-import org.home.gat.command.GatCommand;
-import org.home.gat.command.HelpCommand;
-import org.home.gat.command.QuitCommand;
-import org.home.gat.command.TagListCommand;
+import org.home.gat.command.*;
 import org.home.gat.exception.QuitException;
 import org.springframework.context.ApplicationContext;
 
@@ -37,13 +34,16 @@ class MainLoop {
         builder.withGroup("tags")
                 .withDescription("Manage tags")
                 .withDefaultCommand(TagListCommand.class)
-                .withCommand(TagListCommand.class);
+                .withCommands(Arrays.asList(
+                        TagListCommand.class,
+                        TagAddCommand.class
+                ));
+
 
         return builder.build();
     }
 
     void run() {
-        System.out.println("Interactive repl-shell.");
         //run default command - help
         gatDispatcher.parse().run(applicationContext);
 
